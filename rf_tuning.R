@@ -9,7 +9,8 @@ library(tictoc)
 set.seed(2468)
 
 # load required objects ----
-load("model_info/money_setup.rda")
+# load("model_info/money_setup.rda")
+load("model_info/money_setup_v2.rda")
 
 # define model ----
 rf_model <- rand_forest(
@@ -26,7 +27,7 @@ rf_model <- rand_forest(
 # set-up tuning grid ----
 rf_params <- parameters(rf_model) %>% 
   # don't want to use all the parameters (# of predictors)
-  update(mtry = mtry(range = c(2, 10)))
+  update(mtry = mtry(range = c(2, 13)))
 
 # define grid ----
 rf_grid <- grid_regular(rf_params, levels = 5)
@@ -53,4 +54,6 @@ toc(log = TRUE)
 rf_runtime <- tic.log(format = TRUE)
 
 # write out results and workflow ---
-save(rf_tune, rf_workflow, rf_runtime, file = "model_info/rf_tune.rda")
+# save(rf_tune, rf_workflow, rf_runtime, file = "model_info/rf_tune.rda")
+
+save(rf_tune, rf_workflow, rf_runtime, file = "model_info/rf_tune_v2.rda")
